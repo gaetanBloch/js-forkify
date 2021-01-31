@@ -152,6 +152,10 @@ const renderSpinner = () => {
   recipeContainer.insertAdjacentHTML('afterbegin', html);
 };
 
+const loadRecipe = () => {
+  const id = window.location.hash?.slice(1) ?? null;
+  if (id) renderRecipe(id);
+};
+['hashchange', 'load'].forEach((ev) => window.addEventListener(ev, loadRecipe));
+
 renderSpinner();
-getRecipes('pizza')
-  .then((recipes) => renderRecipe(recipes[12].id));
