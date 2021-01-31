@@ -1,4 +1,4 @@
-import SimpleRecipe from './simpleRecipe';
+import SimpleRecipe from './SimpleRecipe';
 
 class Recipe extends SimpleRecipe {
   constructor(
