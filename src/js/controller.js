@@ -132,8 +132,22 @@ const renderRecipe = async (id) => {
     </a>
     </div>
   `;
-  recipeContainer.insertAdjacentHTML('beforeend', html);
+  recipeContainer.innerHTML = '';
+  recipeContainer.insertAdjacentHTML('afterbegin', html);
 };
 
+const renderSpinner = () => {
+  const html = `
+  <div class="spinner">
+    <svg>
+      <use href="${icons}#icon-loader"></use>
+    </svg>
+  </div> 
+  `;
+  recipeContainer.innerHTML = '';
+  recipeContainer.insertAdjacentHTML('afterbegin', html);
+};
+
+renderSpinner();
 getRecipes('pizza')
   .then((recipes) => renderRecipe(recipes[12].id));
