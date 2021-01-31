@@ -23,6 +23,20 @@ class RecipeView extends View {
   `;
   }
 
+  renderMessage() {
+    this.clear();
+    this.parentEl.insertAdjacentHTML('afterbegin', `
+    <div class="message">
+    <div>
+      <svg>
+        <use href="${icons}#icon-smile"></use>
+      </svg>
+    </div>
+    <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+    </div>
+    `);
+  }
+
   getHtml() {
     return `
     <figure class="recipe__fig">

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -40,7 +39,8 @@ const getRecipe = async (id) => {
   );
 };
 
-const renderRecipe = async () => {
+const controlRecipe = async () => {
+  RecipeView.renderMessage();
   const id = window.location.hash?.slice(1) ?? null;
   if (id) {
     RecipeView.renderSpinner();
@@ -50,5 +50,5 @@ const renderRecipe = async () => {
 };
 
 (() => {
-  RecipeView.addHandler(renderRecipe);
+  RecipeView.addHandler(controlRecipe);
 })();
