@@ -23,5 +23,9 @@
     "eslint-plugin-import": "^2.22.1",
     "parcel": "^2.0.0-beta.1",
     "sass": "^1.32.5"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "regenerator-runtime": "^0.13.7"
   }
 }

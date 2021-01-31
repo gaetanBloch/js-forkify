@@ -1,5 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
 import icons from 'url:../img/icons.svg';
+
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import SimpleRecipe from './model/simpleRecipe';
 import Recipe from './model/recipe';
 
