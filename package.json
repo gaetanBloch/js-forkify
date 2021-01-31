@@ -2,9 +2,10 @@
   "name": "js-forkify",
   "version": "1.0.0",
   "description": "Bon appétit bien sûr !",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
