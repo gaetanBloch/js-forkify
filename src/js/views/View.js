@@ -18,6 +18,16 @@ class View {
     this.parentEl.insertAdjacentHTML('afterbegin', this.getHtml());
   }
 
+  renderMessage() {
+    this.clear();
+    this.parentEl.insertAdjacentHTML('afterbegin', this.getMessageHtml());
+  }
+
+  renderError() {
+    this.clear();
+    this.parentEl.insertAdjacentHTML('afterbegin', this.getErrorHtml());
+  }
+
   renderSpinner() {
     const html = `
     <div class="spinner">
@@ -35,13 +45,26 @@ class View {
   }
 
   // Method to override
-  addHandler(handler) {
-    this.handler = handler;
+  // eslint-disable-next-line class-methods-use-this
+  getHtml() {
+    throw new Error('You must implement this function');
   }
 
   // Method to override
   // eslint-disable-next-line class-methods-use-this
-  getHtml() {
+  getMessageHtml() {
+    throw new Error('You must implement this function');
+  }
+
+  // Method to override
+  // eslint-disable-next-line class-methods-use-this
+  getErrorHtml() {
+    throw new Error('You must implement this function');
+  }
+
+  // Method to override
+  // eslint-disable-next-line class-methods-use-this,no-unused-vars
+  addHandler(handler) {
     throw new Error('You must implement this function');
   }
 }

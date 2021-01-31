@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 
 import SimpleRecipe from './models/SimpleRecipe';
 import Recipe from './models/Recipe';
-import RecipeView from './views/recipeView';
+import RecipeView from './views/RecipeView';
 
 const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
 
@@ -40,12 +40,16 @@ const getRecipe = async (id) => {
 };
 
 const controlRecipe = async () => {
-  RecipeView.renderMessage();
-  const id = window.location.hash?.slice(1) ?? null;
-  if (id) {
-    RecipeView.renderSpinner();
-    const recipe = await getRecipe(id);
-    RecipeView.render(recipe);
+  try {
+    RecipeView.renderMessage();
+    const id = window.location.hash?.slice(1) ?? null;
+    if (id) {
+      RecipeView.renderSpinner();
+      const recipe = await getRecipe(id);
+      RecipeView.render(recipe);
+    }
+  } catch (e) {
+    RecipeView.renderError();
   }
 };
 

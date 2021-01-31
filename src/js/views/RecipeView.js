@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import icons from 'url:../../img/icons.svg';
 
-import View from './view';
+import View from './View';
 
 class RecipeView extends View {
   constructor() {
@@ -23,18 +23,30 @@ class RecipeView extends View {
   `;
   }
 
-  renderMessage() {
-    this.clear();
-    this.parentEl.insertAdjacentHTML('afterbegin', `
+  getMessageHtml() {
+    return `
     <div class="message">
-    <div>
-      <svg>
-        <use href="${icons}#icon-smile"></use>
-      </svg>
+      <div>
+        <svg>
+          <use href="${icons}#icon-smile"></use>
+        </svg>
+      </div>
+      <p>Start by searching for a recipe or an ingredient. Have fun!</p>
     </div>
-    <p>Start by searching for a recipe or an ingredient. Have fun!</p>
-    </div>
-    `);
+    `;
+  }
+
+  getErrorHtml() {
+    return `
+    <div class="error">
+      <div>
+        <svg>
+          <use href="${icons}#icon-alert-triangle"></use>
+        </svg>
+      </div>
+      <p>No recipes found for your query. Please try again!</p>
+    </div> 
+    `;
   }
 
   getHtml() {
@@ -119,10 +131,9 @@ class RecipeView extends View {
   }
 
   addHandler(handler) {
-    super.addHandler(handler);
     ['hashchange', 'load'].forEach((ev) => window.addEventListener(
       ev,
-      this.handler,
+      handler,
     ));
   }
 }
