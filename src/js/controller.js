@@ -1,3 +1,6 @@
+import SimpleRecipe from './model/simpleRecipe';
+import Recipe from './model/recipe';
+
 const recipeContainer = document.querySelector('.recipe');
 
 const URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
@@ -19,27 +22,19 @@ const getJSON = async (url) => {
 
 const getRecipes = async (search) => {
   const data = await getJSON(`${URL}?search=${search}`);
-  return Array.from(data.data.recipes, (recipe) => ({
-    publisher: recipe.publisher,
-    title: recipe.title,
-    id: recipe.id,
-    imageUrl: recipe.image_url,
-  }));
+  return Array.from(data.data.recipes, (recipe) => new SimpleRecipe(recipe));
 };
 
 const getRecipe = async (id) => {
   const data = await getJSON(`${URL}/${id}`);
   const { recipe } = data.data;
-  return {
-    publisher: recipe.publisher,
-    title: recipe.title,
-    id: recipe.id,
-    ingredients: recipe.ingredients,
-    servings: recipe.servings,
-    imageUrl: recipe.image_url,
-    sourceUrl: recipe.source_url,
-    cookingTime: recipe.cooking_time,
-  };
+  return new Recipe(
+    recipe,
+    recipe.ingredients,
+    recipe.servings,
+    recipe.source_url,
+    recipe.cooking_time,
+  );
 };
 
 getRecipes('pizza').then((recipes) => {
