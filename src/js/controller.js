@@ -4,27 +4,46 @@ import 'regenerator-runtime/runtime';
 import SimpleRecipe from './models/SimpleRecipe';
 import Recipe from './models/Recipe';
 import RecipeView from './views/RecipeView';
+import RecipesView from './views/RecipesView';
+import PaginationView from './views/PaginationView';
+import { API_URL, RECIPES_PER_PAGE } from './config';
+import { getHash, getJSON } from './helpers';
 
-const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
-
-const timeout = (seconds) => new Promise((_, reject) => {
-  setTimeout(() => {
-    reject(new Error(`Request took too long! Timeout after ${seconds} seconds`));
-  }, seconds * 1000);
-});
-
-// https://forkify-api.herokuapp.com/v2
-
-const getJSON = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
-  if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-  return data;
+const state = {
+  recipe: {},
+  search: {
+    recipes: [],
+    page: 1,
+  },
 };
 
-const getRecipes = async (search) => {
+const loadRecipes = async () => {
+  const search = document.querySelector('.search__field').value;
   const data = await getJSON(`${API_URL}?search=${search}`);
-  return Array.from(data.data.recipes, (recipe) => new SimpleRecipe(recipe));
+  state.search.recipes = Array.from(
+    data.data.recipes, (recipe) => new SimpleRecipe(recipe),
+  );
+  state.search.page = 1;
+};
+
+const renderRecipesPage = (page = state.search.page) => {
+  const start = (page - 1) * RECIPES_PER_PAGE;
+  const end = page * RECIPES_PER_PAGE;
+  state.search.page = page;
+  RecipesView.render(state.search.recipes.slice(start, end));
+  PaginationView.render(state.search);
+};
+
+const controlRecipes = async (event) => {
+  event.preventDefault();
+
+  try {
+    RecipesView.renderSpinner();
+    await loadRecipes();
+    renderRecipesPage();
+  } catch (e) {
+    RecipesView.renderError();
+  }
 };
 
 const getRecipe = async (id) => {
@@ -42,11 +61,11 @@ const getRecipe = async (id) => {
 const controlRecipe = async () => {
   try {
     RecipeView.renderMessage();
-    const id = window.location.hash?.slice(1) ?? null;
+    const id = getHash();
     if (id) {
       RecipeView.renderSpinner();
-      const recipe = await getRecipe(id);
-      RecipeView.render(recipe);
+      state.recipe = await getRecipe(id);
+      RecipeView.render(state.recipe);
     }
   } catch (e) {
     RecipeView.renderError();
@@ -54,5 +73,7 @@ const controlRecipe = async () => {
 };
 
 (() => {
+  RecipesView.addHandler(controlRecipes);
+  PaginationView.addHandler(renderRecipesPage);
   RecipeView.addHandler(controlRecipe);
 })();

@@ -44,6 +44,19 @@ class View {
     this.parentEl.innerHTML = '';
   }
 
+  getErrorHtml() {
+    return `
+    <div class="error">
+      <div>
+        <svg>
+          <use href="${icons}#icon-alert-triangle"></use>
+        </svg>
+      </div>
+      <p>No recipes found for your query. Please try again!</p>
+    </div> 
+    `;
+  }
+
   // Method to override
   // eslint-disable-next-line class-methods-use-this
   getHtml() {
@@ -53,12 +66,6 @@ class View {
   // Method to override
   // eslint-disable-next-line class-methods-use-this
   getMessageHtml() {
-    throw new Error('You must implement this function');
-  }
-
-  // Method to override
-  // eslint-disable-next-line class-methods-use-this
-  getErrorHtml() {
     throw new Error('You must implement this function');
   }
 

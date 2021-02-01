@@ -20,9 +20,10 @@ class RecipeView extends View {
         ${ingredient.description}
       </div>
     </li>
-  `;
+    `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getMessageHtml() {
     return `
     <div class="message">
@@ -33,19 +34,6 @@ class RecipeView extends View {
       </div>
       <p>Start by searching for a recipe or an ingredient. Have fun!</p>
     </div>
-    `;
-  }
-
-  getErrorHtml() {
-    return `
-    <div class="error">
-      <div>
-        <svg>
-          <use href="${icons}#icon-alert-triangle"></use>
-        </svg>
-      </div>
-      <p>No recipes found for your query. Please try again!</p>
-    </div> 
     `;
   }
 
@@ -130,6 +118,7 @@ class RecipeView extends View {
     `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   addHandler(handler) {
     ['hashchange', 'load'].forEach((ev) => window.addEventListener(
       ev,
